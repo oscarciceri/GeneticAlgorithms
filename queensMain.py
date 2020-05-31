@@ -18,23 +18,23 @@ if __name__ == '__main__':
 	population = []
 	maxFitness = 28
 
-# ____ ___ ____ ____ ___    ___  ____ ___  _  _ _    ____ ___ _ ____ _  _ 
-# [__   |  |__| |__/  |     |__] |  | |__] |  | |    |__|  |  | |  | |\ | 
-# ___]  |  |  | |  \  |     |    |__| |    |__| |___ |  |  |  | |__| | \| 
-    
+# _ _  _ _ ___ _ ____ _       ___  ____ ___  _  _ _    ____ ___ _ ____ _  _ 
+# | |\ | |  |  | |__| |       |__] |  | |__] |  | |    |__|  |  | |  | |\ | 
+# | | \| |  |  | |  | |___    |    |__| |    |__| |___ |  |  |  | |__| | \| 
+                                                                          
 	for j in range(sizePopulation):
 		for i in range(nGens):
 			chromosome.append(random.randrange(minAllele, maxAllele, 1))
 		population.append(chromosome.copy())
 		chromosome.clear()
-	
-	# # chromosome for testing
-	# chromosome = [7, 5, 3, 1, 6, 4, 2, 0] 
-	# population.append(chromosome.copy())
-
+# ____ ___ ____ ____ ___    ____ ____ 
+# [__   |  |__| |__/  |     | __ |__| 
+# ___]  |  |  | |  \  |     |__] |  | 
+                                    
 	g = queensGenetic.Algorithm(population, numberGenerations, repeatChromosome, maxFitness, maxAllele, minAllele, nGens)
 	g.printPopulation()
 	g.run()
+
 	# g.findFitness()
 	# g.sortFitnessPopulation()
 	# g.findAptitude()
