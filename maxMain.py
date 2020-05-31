@@ -1,4 +1,4 @@
-import Genetic
+import maxGenetic
 
 if __name__ == '__main__':
 
@@ -7,7 +7,7 @@ if __name__ == '__main__':
 
 	population = [[0,1,1,0], [1,1,0,0], [1,0,1,1], [0,0,0,1]]
 
-	g = Genetic.Algorithm(population, numberGenerations, repeatChromosome)
+	g = maxGenetic.Algorithm(population, numberGenerations, repeatChromosome)
 	g.printPopulation()
 	g.run()
 
