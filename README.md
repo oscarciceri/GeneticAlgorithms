@@ -23,3 +23,6 @@
 * Execute the main.py
 
 
+## Jupyter notebook
+* Execute: jupyter notebook
+
