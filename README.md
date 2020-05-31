@@ -20,5 +20,6 @@
 
 * Good idea to use virtualenv
 * Tested on python 3.8
+* Execute the main.py
 
 
