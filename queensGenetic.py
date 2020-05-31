@@ -4,6 +4,11 @@ import random
 import math
 
 
+# ____ _  _ _  _ ____ ___ _ ____ _  _ ____ 
+# |___ |  | |\ | |     |  | |  | |\ | [__  
+# |    |__| | \| |___  |  | |__| | \| ___] 
+                                         
+
 def fitnessFunction(chromosome, maxFitness):
 	fitness = 0
 	for i in range(len(chromosome)-1):
@@ -96,7 +101,6 @@ def crossoverFunction(parents,point):
 	children.append(c2)
 	return children
 
-
 def generativeFunction(vector, minAllele, maxAllele):
 	newAllele = random.randrange(minAllele, maxAllele+1, 1)
 	newLocus = random.randrange(0, len(vector), 1)
@@ -118,7 +122,10 @@ def seqSwapFunction(vector, point):
 	return vector
 			
 
-
+# ____ _    ____ ____ ____    ____ ____ 
+# |    |    |__| [__  [__     | __ |__| 
+# |___ |___ |  | ___] ___]    |__] |  | 
+                                      
 
 class Algorithm:
 
@@ -203,7 +210,6 @@ class Algorithm:
 				break
 		#print("Selected Chromosomes: ", self.parents)
 
-
 	def reproduction(self):
 		#point = 3
 		length = self.nGens
@@ -215,8 +221,6 @@ class Algorithm:
 		self.children[idCh] = generativeFunction(self.children[idCh].copy(), self.minAllele, self.maxAllele)
 		#self.children[selectChilden] = swapFunction(self.children[selectChilden].copy())
 
-
-
 	def mutation(self):
 		length = self.nGens
 		point = random.randrange(0, length, 1)
@@ -225,7 +229,6 @@ class Algorithm:
 		#print("Child for mutation with seqSwap: ", self.mutant)
 		self.mutant = generativeFunction(self.mutant.copy(), self.minAllele, self.maxAllele)
 		#print("Child for mutation with generative: ", self.mutant)
-
 
 	def newGenerationElitism(self):
 		aux = self.population
@@ -248,6 +251,7 @@ class Algorithm:
 # ____ _  _ _  _ _  _ _ _  _ ____    ____ ____ 
 # |__/ |  | |\ | |\ | | |\ | | __    | __ |__| 
 # |  \ |__| | \| | \| | | \| |__]    |__] |  | 
+	
 	def run(self):
 		print("Running GE")
 		generation = 0
@@ -267,7 +271,6 @@ class Algorithm:
 			self.reproduction()
 			self.mutation()
 			self.newGenerationElitism()
-
 # ____ ___ ____ ___  ___  _ _  _ ____    ____ ____ _ ___ ____ ____ _ ____ 
 # [__   |  |  | |__] |__] | |\ | | __    |    |__/ |  |  |___ |__/ | |__| 
 # ___]  |  |__| |    |    | | \| |__]    |___ |  \ |  |  |___ |  \ | |  | 
@@ -280,7 +283,10 @@ class Algorithm:
 				running = False
 			else:
 				running = True
-
+# ____ ____ ____ _  _ _    ___ ____ 
+# |__/ |___ [__  |  | |     |  [__  
+# |  \ |___ ___] |__| |___  |  ___] 
+                                  
 		print("\n\n\n *************  ANSWER ************** \n\n") 
 		print("\nGeneration = ", generation,
 		      "\nBest Chromosome = ", self.population[0],
