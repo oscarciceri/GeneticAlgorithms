@@ -2,7 +2,8 @@ import numpy as np
 import threading
 import random
 import math
-
+import os
+import time
 
 # ____ _  _ _  _ ____ ___ _ ____ _  _ ____ 
 # |___ |  | |\ | |     |  | |  | |\ | [__  
@@ -58,7 +59,6 @@ def linearNormFunction(vector):
 	return vector
 
 def pdfFunction(vector):
-	print(vector)
 	suma = sum(vector)
 	for i in range(len(vector)):
 		vector[i] = vector[i]/suma
@@ -75,6 +75,11 @@ def bestChFunction(population, pdf):
 	index_max = np.argmax(pdf)
 	bestCh = population[index_max]
 	return bestCh
+
+def worstChFunction(population, pdf):
+	index_min = np.argmin(pdf)
+	worstCh = population[index_min]
+	return worstCh
 
 def rouletteFunction(population, cdf):
 	randomValue = random.random()
@@ -138,6 +143,7 @@ class Algorithm:
 		self.pdf = []
 		self.cdf = []
 		self.bestCh = []
+		self.worstCh = []
 		self.rouletteCh = []
 		self.parents = []
 		self.children = []
@@ -148,6 +154,10 @@ class Algorithm:
 		self.maxAllele = maxAllele
 		self.minAllele = minAllele
 		self.nGens = nGens
+
+		self.statsBest = []
+		self.statsAvg = []
+		self.statsWorst = []
 
 
 	def printPopulation(self):
@@ -193,6 +203,11 @@ class Algorithm:
 		self.bestCh = bestChFunction(self.population, self.pdf)
 		print("Best Chromosome : ", self.bestCh, " with fitness = ", fitnessFunction(self.bestCh, self.maxFitness))
 
+	def worstChromosome(self):
+		self.worstCh = worstChFunction(self.population, self.pdf)
+		print("Worst Chromosome : ", self.worstCh, " with fitness = ", fitnessFunction(self.worstCh, self.maxFitness))
+
+
 	def rouletteMethod(self):
 		self.rouletteCh = rouletteFunction(self.population, self.cdf)
 		#print("Chromosome Roulette: ", self.rouletteCh)
@@ -237,12 +252,20 @@ class Algorithm:
 		self.population.append(self.children[0].copy())
 		self.population.append(self.children[1].copy())
 		self.population.append(self.mutant.copy())
-		print("New population: ", self.population)
+		# print("New population: ", self.population)
+
+	def statistics(self):
+		self.statsBest.append(fitnessFunction(self.bestCh, self.maxFitness))
+		self.statsWorst.append(fitnessFunction(self.worstCh, self.maxFitness))
+		self.statsAvg.append(sum(self.fitness)/len(self.fitness))
+		
+	def clearAll(self):
 		self.fitness.clear()
 		self.aptitude.clear()
 		self.pdf.clear()
 		self.cdf.clear()
 		self.bestCh.clear()
+		self.worstCh.clear()
 		self.rouletteCh.clear()
 		self.parents.clear()
 		self.children.clear()
@@ -258,19 +281,21 @@ class Algorithm:
 		nrepeat = 0
 		running = True
 		while running:
-			print("Generation", generation)
 			generation+=1
-
+			print("\nGeneration", generation)
 			self.findFitness()
 			self.sortFitnessPopulation()
 			self.findAptitude()
 			self.findPDF()
 			self.findCDF()
 			self.bestChromosome()
+			self.worstChromosome()
 			self.selectionCh()
 			self.reproduction()
 			self.mutation()
 			self.newGenerationElitism()
+			self.statistics()
+			self.clearAll()
 # ____ ___ ____ ___  ___  _ _  _ ____    ____ ____ _ ___ ____ ____ _ ____ 
 # [__   |  |  | |__] |__] | |\ | | __    |    |__/ |  |  |___ |__/ | |__| 
 # ___]  |  |__| |    |    | | \| |__]    |___ |  \ |  |  |___ |  \ | |  | 
@@ -287,11 +312,22 @@ class Algorithm:
 # |__/ |___ [__  |  | |     |  [__  
 # |  \ |___ ___] |__| |___  |  ___] 
                                   
-		print("\n\n\n *************  ANSWER ************** \n\n") 
+		print("\n\n\n *************  ANSWER ************** ") 
 		print("\nGeneration = ", generation,
 		      "\nBest Chromosome = ", self.population[0],
 		      "\nFitness = ", fitnessFunction(self.population[0].copy(), self.maxFitness))
-		
+
+
+		if os.path.exists('results/data.csv'):
+  			os.remove('results/data.csv')
+		for i in range(len(self.statsBest)):
+			resultFile = open('results/data.csv', 'a')
+			resultFile.write("{}{}{}{}{}{}{}{}".format(
+				i,":",
+				self.statsBest[i],":",
+				self.statsWorst[i],":",
+				self.statsAvg[i],'\n'))
+			resultFile.close()
 
 
 
