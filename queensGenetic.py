@@ -311,7 +311,7 @@ class Algorithm:
 # ____ ____ ____ _  _ _    ___ ____ 
 # |__/ |___ [__  |  | |     |  [__  
 # |  \ |___ ___] |__| |___  |  ___] 
-                                  
+		self.bestChromosome  = self.population[0].copy()                       
 		print("\n\n\n *************  ANSWER ************** ") 
 		print("\nGeneration = ", generation,
 		      "\nBest Chromosome = ", self.population[0],
@@ -327,6 +327,13 @@ class Algorithm:
 				self.statsBest[i],":",
 				self.statsWorst[i],":",
 				self.statsAvg[i],'\n'))
+			resultFile.close()
+
+		if os.path.exists('results/chromosome.csv'):
+  			os.remove('results/chromosome.csv')
+		for i in range(len(self.bestChromosome)):
+			resultFile = open('results/chromosome.csv', 'a')
+			resultFile.write("{}{}{}{}".format(i,':',self.bestChromosome[i],'\n'))
 			resultFile.close()
 
 
