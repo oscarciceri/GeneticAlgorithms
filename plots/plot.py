@@ -55,7 +55,7 @@ plt.errorbar(x,y2, ls="solid", label='Worst', color='r', yerr=y2_std, zorder=3)
 plt.errorbar(x,y3, ls="solid", label='Average', color='b', yerr=y3_std, zorder=3)			
 
 nameFile = 'queens'
-ylabel = 'Pairs of non-attacking queens'
+ylabel = 'Pairs of Attacking Queens'
 xlabel = 'Number of generations'
 title = "8-Queens Problem"
 
